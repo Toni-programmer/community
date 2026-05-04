@@ -10,4 +10,5 @@
 
  User.find_or_create_by!(name: "Admin", email: "admin@gmail.com") do |user|
    user.password = "12341234"
+   user.role = "admin"
  end
