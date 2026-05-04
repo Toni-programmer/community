@@ -1,0 +1,27 @@
+<!-- lib/templates/erb/scaffold/show.html.erb.tt -->
+<div class="card card-body w-100 w-xl-50">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong>Nombre</strong></td>
+        <td><%= @supplier.name.presence || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Servicio</strong></td>
+        <td><%= @supplier.service.presence || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Contacto</strong></td>
+        <td><%= @supplier.contact.presence || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>CIF</strong></td>
+        <td><%= @supplier.cif.presence || "-" %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", suppliers_path, class: "me-1" %> |
+  <%= link_to "Editar", edit_supplier_path(@supplier), class: "ms-1" %>
+</div>

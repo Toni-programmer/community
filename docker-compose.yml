@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: rails_comunity_production
+      MYSQL_USER: rails_comunity
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ppassword"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  web:
+    build: .
+    depends_on:
+      - db
+         
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: production
+      DB_HOST: db
+      DB_USERNAME: rails_comunity
+      DB_PASSWORD: password
+      RAILS_COMUNITY_DATABASE_PASSWORD: password
+      RAILS_MASTER_KEY: e604e1b67008156be2d48d4a962402df
+    command: >
+      bash -c "
+      until mysqladmin ping -h db -u rails_comunity -ppassword --silent --ssl=0; do
+        echo 'waiting for db...';
+        sleep 2;
+      done;
+      bin/rails db:prepare &&
+      bin/rails server -b 0.0.0.0 -p 3000
+      "
+
+volumes:
+  mysql_data:

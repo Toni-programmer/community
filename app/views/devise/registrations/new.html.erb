@@ -1,0 +1,44 @@
+<div class="sign-container">
+  <%= image_tag "main.png", class: "photo-main", id: "image", alt: "Main", title: "Comunidad"  %>
+  <div class="sign-box">
+    <h2>Registro de Usuario</h2>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="field">
+        <p><%= f.label :Nombre %></p>
+        <p><%= f.text_field :name %></p>
+      </div>
+      <div class="field">
+        <p><%= f.label :Apellidos %></p>
+        <p><%= f.text_field :lastname %></p>
+      </div>
+      <div class="field">
+        <p><%= f.label :Telefono %></p>
+        <p><%= f.text_field :phone %></p>
+      </div>
+      <div class="field">
+        <p><%= f.label :Tipo_de_propietario %></p>
+        <p><%= f.select :property_type, User.property_types.keys %></p>
+      </div>
+      <div class="field">
+        <p><%= f.label :Email %></p>
+        <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
+      </div>
+      <div class="field">
+        <p><%= f.label :Contraseña %></p>
+        <% if @minimum_password_length %>
+          <p><em>(<%= @minimum_password_length %> caracteres mínimo)</em></p>
+        <% end %>
+        <p><%= f.password_field :password, autocomplete: "Nueva contraseña" %></p>
+      </div>
+      <div class="field">
+        <p><%= f.label :Confirma_contraseña %></p>
+        <p><%= f.password_field :password_confirmation, autocomplete: "Nueva contraseña" %></p>
+      </div>
+      <div class="actions">
+        <%= f.submit "Registrado" %>
+      </div>
+    <% end %>
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

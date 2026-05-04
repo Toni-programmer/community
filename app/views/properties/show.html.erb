@@ -1,0 +1,35 @@
+<!-- lib/templates/erb/scaffold/show.html.erb.tt -->
+<div class="card card-body w-100 w-xl-50">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong>Usuario</strong></td>
+        <td><%= @property.user&.presence.full_name || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Comunidad</strong></td>
+        <td><%= @property.community.presence.name || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Número</strong></td>
+        <td><%= @property.number.presence || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Estado de morosidad</strong></td>
+        <td><%= Property.payment_statuses[@property.payment_status.presence] || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Pagos atrasados</strong></td>
+        <td><%= @property.late_payment.presence || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Total de propietarios</strong></td>
+        <td><%= @property.total_owners.presence || "-" %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", properties_path, class: "me-1" %> |
+  <%= link_to "Editar", edit_property_path(@property), class: "ms-1" %>
+</div>

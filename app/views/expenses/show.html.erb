@@ -1,0 +1,35 @@
+<!-- lib/templates/erb/scaffold/show.html.erb.tt -->
+<div class="card card-body w-100 w-xl-50">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong> Caja </strong></td>
+        <td><%= @expense.cash_balance.presence.financial_year || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Proveedor</strong></td>
+        <td><%= @expense.supplier.presence.name || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Incidencia</strong></td>
+        <td><%= @expense.incidence.presence.description || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Cantidad</strong></td>
+        <td><%= @expense.amount.presence || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Fecha</strong></td>
+        <td><%= @expense.date.presence || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Estado</strong></td>
+        <td><%= Expense.statuses[@expense.status.presence] || "-" %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", expenses_path, class: "me-1" %> |
+  <%= link_to "Editar", edit_expense_path(@expense), class: "ms-1" %>
+</div>

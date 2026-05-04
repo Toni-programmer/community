@@ -1,0 +1,54 @@
+<!-- lib/templates/erb/scaffold/index.html.erb.tt -->
+<div class="card card-body" id="incidences">
+  <%= link_to new_incidence_path, class: "btn btn-success btn-sm w-200px" do %>
+    <i class="fa fa-plus"></i> Nueva Incidencia
+  <% end %>
+  <div class="separator mt-10 mb-3"></div>
+  <table class="table table-hover table-rounded table-striped gy-7 gs-7">
+    <thead>
+      <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
+        <th>Comunidad</th>
+        <th>Usuario</th>
+        <th>Descripción</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Foto</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @incidences.each do |incidence| %>
+        <tr>
+          <td><%= incidence.community.name %></td>
+          <td><%= incidence.user.full_name %></td>
+          <td><%= incidence.description %></td>
+          <td><%= incidence.date.strftime("%d-%m-%Y %H:%M") %></td>
+          <td><%= Incidence.statuses[incidence.status.presence] || "-" %></td>
+          <td><%= incidence.photo %></td>
+          <td class="text-end">
+            <button
+            type="button"
+            class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+              Acciones
+            </button>
+            <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
+              <%= link_to "Ver", incidence, class: "dropdown-item" %>
+              <%= link_to "Editar", edit_incidence_path(incidence), class: "dropdown-item" %>
+              <%= link_to "Eliminar", incidence, class: "dropdown-item", data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center mt-2">
+    <%= will_paginate @receipts,
+      previous_label: "← Anterior",
+      next_label: "Siguiente →",
+      class: "pagination pagination-sm mb-0" %>
+  </div>
+</div>

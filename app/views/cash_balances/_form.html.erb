@@ -1,0 +1,40 @@
+<!-- lib/templates/erb/scaffold/_form.html.erb.tt -->
+<% if cash_balance.errors.any? %>
+  <div class="alert alert-danger d-flex align-items-center p-5">
+    <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+    <div class="d-flex flex-column">
+      <h4 class="mb-1 text-danger">
+        No se ha podido realizar la acción
+      </h4>
+      <span class="ms-4">
+        <% cash_balance.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </span>
+    </div>
+  </div>
+<% end %>
+<div class="card card-body mb-8">
+  <%= form_with model: cash_balance, data: { turbo: false } do |form| %>
+    <div class="mb-4">
+      <%= form.label "Comunidad", class: "form-label" %>
+      <%= form.collection_select(:community_id, Community.all, :id, :name, prompt: "Elige una comunidad")%>
+    </div>
+    <div class="mb-4">
+      <%= form.label "Año financiero", class: "form-label" %>
+      <%= form.text_field :financial_year, class: "form-control form-control-solid", required: true %>
+    </div>
+    <div class="mb-4">
+      <%= form.label "Cuenta corriente", class: "form-label" %>
+      <%= form.text_field :current_amount, class: "form-control form-control-solid", required: true %>
+    </div>
+    <div class="mb-4">
+      <%= form.label "Estado", class: "form-label" %>
+      <%= form.collection_select(:status, CashBalance.statuses, :first, :second, prompt: "Elige un estado") %>
+    </div>
+    <div class="mt-8">
+      <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
+      <%= link_to "Cancelar", cash_balance.persisted? ? cash_balance : cash_balances_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+    </div>
+  <% end %>
+</div>

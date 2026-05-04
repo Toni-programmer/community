@@ -1,0 +1,12 @@
+<div class="comunity-container">
+  <div class="comunity-box">
+    <% content_for :title, "Editing community" %>
+    <h1>Editar comunidad</h1>
+    <%= render "form", community: @community %>
+    <br>
+    <div>
+      <%= link_to "Mostrar", @community, class: "btn btn-light border text-primary w-100" %>
+      <%= link_to "Atrás", communities_path, class: "btn btn-light border text-primary w-100" %>
+    </div>
+  </div>
+</div>

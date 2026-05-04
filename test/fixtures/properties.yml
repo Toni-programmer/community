@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  community: one
+  number: MyString
+  payment_status: MyString
+  late_payment: false
+  total_owners: 1
+
+two:
+  user: two
+  community: two
+  number: MyString
+  payment_status: MyString
+  late_payment: false
+  total_owners: 1

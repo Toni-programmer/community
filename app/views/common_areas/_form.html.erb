@@ -1,0 +1,36 @@
+<!-- lib/templates/erb/scaffold/_form.html.erb.tt -->
+<% if common_area.errors.any? %>
+  <div class="alert alert-danger d-flex align-items-center p-5">
+    <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+    <div class="d-flex flex-column">
+      <h4 class="mb-1 text-danger">
+        No se ha podido realizar la acción
+      </h4>
+      <span class="ms-4">
+        <% common_area.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </span>
+    </div>
+  </div>
+<% end %>
+<div class="card card-body mb-8">
+  <%= form_with model: common_area, data: { turbo: false } do |form| %>
+    <div class="mb-4">
+      <p><%= form.label "Comunidad", class: "form-label" %></p>
+      <%= form.collection_select(:community_id, Community.all, :id, :name, prompt: "Elige una comunidad") %>
+    </div>
+    <div class="mb-4">
+      <%= form.label "Nombre de la zona común", class: "form-label" %>
+      <%= form.text_field :name, class: "form-control form-control-solid", required: true%>
+    </div>
+    <div class="mb-4">
+      <%= form.label "Tipo de zona", class: "form-label" %>
+      <%= form.collection_select(:area_type, CommonArea.area_types,  :first, :second, prompt: "Elige una zona") %>
+    </div>
+    <div class="mt-8">
+      <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
+      <%= link_to "Cancelar", common_area.persisted? ? common_area : common_areas_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+    </div>
+  <% end %>
+</div>

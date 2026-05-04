@@ -1,0 +1,11 @@
+<div class="comunity-box">
+  <% content_for :title, "New community" %>
+  <h1 class="bg-light border text-primary rounded p-3">
+    Nueva comunidad
+  </h1>
+  <%= render "form", community: @community %>
+  <br>
+  <div>
+    <%= link_to "Atrás", communities_path, class: "btn btn-light border text-primary w-100" %>
+  </div>
+</div>

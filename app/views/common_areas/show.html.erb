@@ -1,0 +1,23 @@
+<!-- lib/templates/erb/scaffold/show.html.erb.tt -->
+<div class="card card-body w-100 w-xl-50">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong>Comunidad</strong></td>
+        <td><%= @common_area.community.name || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Nombre</strong></td>
+        <td><%= @common_area.name.presence || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Tipo de zona común</strong></td>
+        <td><%= CommonArea.area_types[@common_area.area_type.presence] || "-" %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", common_areas_path, class: "me-1" %> |
+  <%= link_to "Editar", edit_common_area_path(@common_area), class: "ms-1" %>
+</div>

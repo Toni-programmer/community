@@ -1,0 +1,69 @@
+<!-- lib/templates/erb/scaffold/index.html.erb.tt -->
+<div class="card card-body" id="expenses">
+  <% if current_user.admin? %>
+    <%= link_to new_expense_path, class: "btn btn-success btn-sm w-200px" do %>
+      <i class="fa fa-plus"></i> Nuevo Gasto
+    <% end %>
+  <% end %>
+  <div class="separator mt-10 mb-3"></div>
+  <table class="table table-hover table-rounded table-striped gy-7 gs-7">
+    <thead>
+      <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
+        <th>Caja</th>
+        <th>Proveedor</th>
+        <th>Incidencia</th>
+        <th>Cantidad</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= search_form_for @q do |f| %>
+        <div class="mb-2">
+          <%= f.label :created_at_gteq, "Desde" %>
+          <%= f.date_field :created_at_gteq, class: "form-control" %>
+        </div>
+        <div class="mb-2">
+          <%= f.label :created_at_lteq, "Hasta" %>
+          <%= f.date_field :created_at_lteq, class: "form-control" %>
+        </div>
+        <%= f.submit "Filtrar", class: "btn btn-success btn-sm w-200px" %>
+      <% end %>
+      <% @expenses.each do |expense| %>
+        <tr>
+          <td><%= expense.cash_balance.current_amount %></td>
+          <td><%= expense.supplier.name %></td>
+          <td><%= expense.incidence.description %></td>
+          <td><%= number_to_currency(expense.amount , unit: "€", format: "%n %u") %></td>
+          <td><%= expense.date.strftime("%d-%m-%Y %H:%M") %></td>
+          <td><%= Expense.statuses[expense.status.presence] || "-" %></td>
+          <td class="text-end">
+            <button
+            type="button"
+            class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+              Acciones
+            </button>
+            <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
+              <%= link_to "Ver", expense, class: "dropdown-item" %>
+              <% if current_user.admin? %>
+                <%= link_to "Editar", edit_expense_path(expense), class: "dropdown-item" %>
+                <%= link_to "Eliminar", expense, class: "dropdown-item", data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center mt-2">
+    <%= will_paginate @receipts,
+      previous_label: "← Anterior",
+      next_label: "Siguiente →",
+      class: "pagination pagination-sm mb-0" %>
+  </div>
+</div>

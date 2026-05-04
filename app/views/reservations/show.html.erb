@@ -1,0 +1,27 @@
+<!-- lib/templates/erb/scaffold/show.html.erb.tt -->
+<div class="card card-body w-100 w-xl-50">
+  <table class="table">
+    <tbody>
+      <tr>
+        <td><strong>Usuario</strong></td>
+        <td><%= @reservation.user&.full_name %></td>
+      </tr>
+      <tr>
+        <td><strong>Zona común</strong></td>
+        <td><%= @reservation.common_area.id|| "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Fecha</strong></td>
+        <td><%= @reservation.date.presence || "-" %></td>
+      </tr>
+      <tr>
+        <td><strong>Estado</strong></td>
+        <td><%= Reservation.statuses[@reservation.status.presence] || "-" %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="flex items-center justify-start mt-4 mb-8">
+  <%= link_to "← Atrás", reservations_path, class: "me-1" %> |
+  <%= link_to "Editar", edit_reservation_path(@reservation), class: "ms-1" %>
+</div>

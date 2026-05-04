@@ -1,0 +1,34 @@
+<%= form_with(model: community) do |form| %>
+  <% if community.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(community.errors.count, "error") %> prohibited this community from being saved:</h2>
+      <ul>
+        <% community.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-bootstrap">
+    <div>
+      <%= form.label :direccion %>
+      <%= form.text_field :address %>
+    </div>
+    <div>
+      <%= form.label :nombre %>
+      <%= form.text_field :name %>
+    </div>
+    <div>
+      <%= form.label :cif %>
+      <%= form.text_field :cif %>
+    </div>
+    <div>
+      <%= form.label :cuenta_corriente %>
+      <%= form.text_field :bank_account %>
+    </div>
+    <br>
+    <div>
+      <%= form.submit "Guardar", class: "btn btn-light border text-primary w-100" %>
+    </div>
+  </div>
+<% end %>

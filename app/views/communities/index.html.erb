@@ -1,0 +1,17 @@
+<div class="comunity-box">
+  <p style="color: green"><%= notice %></p>
+  <% content_for :title, "Communities" %>
+  <h1>Comunidad</h1>
+  <div id="communities">
+    <% @communities.each do |community| %>
+      <%= render community %>
+      <br>
+      <p>
+        <%= link_to "Mostrar comuniad", community, class: "btn btn-primary" %>
+      </p>
+    <% end %>
+  </div>
+  <% if current_user.admin? %>
+    <%= link_to "Nueva comunidad", new_community_path, class: "btn btn-primary" %>
+  <% end %>
+</div>

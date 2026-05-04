@@ -1,0 +1,40 @@
+<!-- lib/templates/erb/scaffold/_form.html.erb.tt -->
+<% if reservation.errors.any? %>
+  <div class="alert alert-danger d-flex align-items-center p-5">
+    <i class="fa-solid fa-xmark-circle fs-2x text-danger me-4"></i>
+    <div class="d-flex flex-column">
+      <h4 class="mb-1 text-danger">
+        No se ha podido realizar la acción
+      </h4>
+      <span class="ms-4">
+        <% reservation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </span>
+    </div>
+  </div>
+<% end %>
+<div class="card card-body mb-8">
+  <%= form_with model: reservation, data: { turbo: false } do |form| %>
+    <div class="mb-4">
+      <%= form.label :Usuario, class: "form-label" %>
+      <%= form.collection_select(:user_id, User.all, :id, :full_name, prompt: "Elige usuario") %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :Zona, class: "form-label" %>
+      <%= form.collection_select(:common_area_id, CommonArea.all, :id, :name, prompt: "Elige una zona") %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :Fecha, class: "form-label" %>
+      <%= form.datetime_field :date, class: "form-control form-control-solid", required: true %>
+    </div>
+    <div class="mb-4">
+      <%= form.label :Estado, class: "form-label" %>
+      <%= form.collection_select(:status, Maintenance.statuses, :first, :second, prompt: "Elige un estado") %>
+    </div>
+    <div class="mt-8">
+      <%= form.button "Guardar", class: "btn btn-success btn-sm" %>
+      <%= link_to "Cancelar", reservation.persisted? ? reservation : reservations_path, class: "btn btn-link btn-sm btn-color-muted btn-active-color-success ms-4" %>
+    </div>
+  <% end %>
+</div>

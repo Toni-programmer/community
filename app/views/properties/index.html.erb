@@ -1,0 +1,56 @@
+<!-- lib/templates/erb/scaffold/index.html.erb.tt -->
+<div class="card card-body" id="properties">
+  <% if current_user.admin? %>
+    <%= link_to new_property_path, class: "btn btn-success btn-sm w-200px" do %>
+      <i class="fa fa-plus"></i> Nuevo propietario
+    <% end %>
+  <% end %>
+  <div class="separator mt-10 mb-3"></div>
+  <table class="table table-hover table-rounded table-striped gy-7 gs-7">
+    <thead>
+      <tr class="text-start text-muted fw-bold fs-7 text-uppercase gs-0 ">
+        <th>Usuario</th>
+        <th>Comunidad</th>
+        <th>Numero</th>
+        <% if current_user.admin? %>
+          <th>Estado de morosidad</th>
+          <th>Pago atrasado</th>
+        <% end %>
+        <th>Total propietarios</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @properties.each do |property| %>
+        <tr>
+          <td><%= property.user&.full_name || "-" %></td>
+          <td><%= property.community&.name || "-" %></td>
+          <td><%= property.number %></td>
+          <% if current_user.admin? %>
+            <td><%= Property.payment_statuses[property.payment_status.presence] || "-" %></td>
+            <td><%= boolean_icon(property.late_payment) %></td>
+          <% end %>
+          <td><%= property.total_owners %></td>
+          <td class="text-end">
+            <button
+            type="button"
+            class="btn btn-light btn-active-light-primary dropdown-toggle dropdown-toggle-split ms-4"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+              Acciones
+            </button>
+            <div class="dropdown-menu"  style="border: 1px solid #ECECEC">
+              <%= link_to "Ver", property, class: "dropdown-item" %>
+              <% if current_user.admin? %>
+                <%= link_to "Editar", edit_property_path(property), class: "dropdown-item" %>
+                <%= link_to "Eliminar", property, class: "dropdown-item", data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro?" } %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
