@@ -23,7 +23,7 @@ services:
       - db
          
     ports:
-      - "3000:3000"
+      - "3184:3184"
     environment:
       RAILS_ENV: production
       DB_HOST: db
@@ -38,7 +38,7 @@ services:
         sleep 2;
       done;
       bin/rails db:prepare &&
-      bin/rails server -b 0.0.0.0 -p 3000
+      bin/rails server -b 0.0.0.0 -p 3184
       "
 
 volumes:
