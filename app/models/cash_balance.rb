@@ -2,13 +2,14 @@ class CashBalance < ApplicationRecord
   belongs_to :community
   validates :community, presence: true
   has_many :receipts, dependent: :destroy
+  has_many :expenses, dependent: :destroy
 
   def community_name
     self.community.name+" - "+self.community.address
   end
 
  def current_amount
-    receipts.sum(:monthly_price)
+   receipts.sum(:monthly_price) - expenses.sum(:amount)
  end
 
 
