@@ -1,11 +1,11 @@
 class ReservationsController < ApplicationController
+  before_action :require_admin, only: %i[edit update destroy]
   before_action :set_reservation, only: %i[ show edit update destroy ]
 
   # GET /reservations or /reservations.json
   def index
-    @reservations = Reservation
-     .order(created_at: :desc)
-     .paginate(page: params[:page], per_page: 4)
+    base = current_user.admin? ? Reservation : Reservation.joins(:common_area).where(common_areas: { community_id: current_user.community_ids })
+    @reservations = base.order(created_at: :desc).paginate(page: params[:page], per_page: 4)
   end
 
   # GET /reservations/1 or /reservations/1.json
@@ -62,7 +62,8 @@ class ReservationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_reservation
-      @reservation = Reservation.find(params.expect(:id))
+      base = current_user.admin? ? Reservation : Reservation.joins(:common_area).where(common_areas: { community_id: current_user.community_ids })
+      @reservation = base.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

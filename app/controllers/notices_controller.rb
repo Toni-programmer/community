@@ -4,7 +4,7 @@ class NoticesController < ApplicationController
 
   # GET /notices or /notices.json
 def index
-  @notices = Notice.order(created_at: :desc)
+  @notices = community_scope(Notice).order(created_at: :desc)
                    .paginate(page: params[:page], per_page: 2)
 end
 
@@ -62,7 +62,7 @@ end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_notice
-      @notice = Notice.find(params.expect(:id))
+      @notice = community_scope(Notice).find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

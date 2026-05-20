@@ -5,7 +5,8 @@ class ReceiptsController < ApplicationController
 
   # GET /receipts or /receipts.json
   def index
-  @q = Receipt.ransack(params[:q])
+  base = current_user.admin? ? Receipt : Receipt.joins(:property).where(properties: { community_id: current_user.community_ids })
+  @q = base.ransack(params[:q])
   @receipts = @q.result
   .includes(:cash_balance, property: :user)
   .order(created_at: :desc)
@@ -68,7 +69,8 @@ class ReceiptsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_receipt
-      @receipt = Receipt.find(params[:id])
+      base = current_user.admin? ? Receipt : Receipt.joins(:property).where(properties: { community_id: current_user.community_ids })
+      @receipt = base.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

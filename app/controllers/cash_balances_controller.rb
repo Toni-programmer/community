@@ -6,7 +6,7 @@ class CashBalancesController < ApplicationController
 
   # GET /cash_balances or /cash_balances.json
 def index
-  @cash_balances = CashBalance.includes(:community, :receipts)
+  @cash_balances = community_scope(CashBalance).includes(:community, :receipts)
 
   @total_balance = Receipt.sum(:monthly_price)
 end
@@ -64,11 +64,11 @@ end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cash_balance
-      @cash_balance = CashBalance.find(params[:id])
+      @cash_balance = community_scope(CashBalance).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def cash_balance_params
-      params.expect(cash_balance: [ :community_id, :financial_year, :current_amount, :status ])
+      params.expect(cash_balance: [ :community_id, :financial_year, :status ])
     end
 end

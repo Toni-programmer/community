@@ -3,7 +3,8 @@ class Expense < ApplicationRecord
   belongs_to :supplier
   belongs_to :incidence
 
-   after_create :subtract_from_cash_balance
+  validates :amount, presence: true, numericality: { greater_than: 0 }
+  validates :date, presence: true
 
   private
 
@@ -24,14 +25,6 @@ class Expense < ApplicationRecord
    def self.ransackable_associations(auth_object = nil)
   ["cash_balance", "property"]
    end
-
-  def subtract_from_cash_balance
-    return unless cash_balance && amount
-
-    cash_balance.update!(
-      current_amount: cash_balance.current_amount.to_f - amount.to_f
-    )
-  end
 
   def incidence_description
     description

@@ -4,7 +4,7 @@ class MaintenancesController < ApplicationController
 
   # GET /maintenances or /maintenances.json
   def index
-    @maintenances = Maintenance.all
+    @maintenances = current_user.admin? ? Maintenance.all : Maintenance.joins(:common_area).where(common_areas: { community_id: current_user.community_ids })
   end
 
   # GET /maintenances/1 or /maintenances/1.json
@@ -61,7 +61,8 @@ class MaintenancesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_maintenance
-      @maintenance = Maintenance.find(params.expect(:id))
+      base = current_user.admin? ? Maintenance : Maintenance.joins(:common_area).where(common_areas: { community_id: current_user.community_ids })
+      @maintenance = base.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

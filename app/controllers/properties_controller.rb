@@ -4,7 +4,7 @@ class PropertiesController < ApplicationController
 
   # GET /properties or /properties.json
   def index
-    @properties = Property.all
+    @properties = community_scope(Property)
   end
 
   # GET /properties/1 or /properties/1.json
@@ -61,7 +61,7 @@ class PropertiesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_property
-      @property = Property.find(params[:id])
+      @property = community_scope(Property).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

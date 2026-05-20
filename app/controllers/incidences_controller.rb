@@ -1,9 +1,10 @@
 class IncidencesController < ApplicationController
+  before_action :require_admin, only: %i[edit update destroy]
   before_action :set_incidence, only: %i[ show edit update destroy ]
 
   # GET /incidences or /incidences.json
  def index
-  @incidences = Incidence.order(created_at: :desc)
+  @incidences = community_scope(Incidence).order(created_at: :desc)
                          .paginate(page: params[:page], per_page: 2)
  end
 
@@ -61,7 +62,7 @@ class IncidencesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_incidence
-      @incidence = Incidence.find(params.expect(:id))
+      @incidence = community_scope(Incidence).find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

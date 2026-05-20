@@ -4,7 +4,7 @@ class MeetingsController < ApplicationController
 
   # GET /meetings or /meetings.json
   def index
-    @meetings = Meeting.all
+    @meetings = community_scope(Meeting)
   end
 
   # GET /meetings/1 or /meetings/1.json
@@ -61,7 +61,7 @@ class MeetingsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_meeting
-      @meeting = Meeting.find(params[:id])
+      @meeting = community_scope(Meeting).find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

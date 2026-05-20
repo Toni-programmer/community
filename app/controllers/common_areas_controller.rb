@@ -1,9 +1,10 @@
 class CommonAreasController < ApplicationController
+  before_action :require_admin, except: %i[index show]
   before_action :set_common_area, only: %i[ show edit update destroy ]
 
   # GET /common_areas or /common_areas.json
   def index
-    @common_areas = CommonArea.all
+    @common_areas = community_scope(CommonArea)
   end
 
   # GET /common_areas/1 or /common_areas/1.json
@@ -60,7 +61,7 @@ class CommonAreasController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_common_area
-      @common_area = CommonArea.find(params.expect(:id))
+      @common_area = community_scope(CommonArea).find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.

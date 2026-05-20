@@ -2,6 +2,9 @@ class Property < ApplicationRecord
   belongs_to :user
   belongs_to :community
 
+  validates :number, presence: true
+  validates :total_owners, presence: true, numericality: { only_integer: true, greater_than: 0 }
+
   enum :payment_status,{
     afirmative: "Afirmativo",
     negative: "Negativo"

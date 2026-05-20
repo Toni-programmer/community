@@ -4,7 +4,8 @@ class ExpensesController < ApplicationController
 
   # GET /expenses or /expenses.json
   def index
-    @q = Expense.ransack(params[:q])
+    base = current_user.admin? ? Expense : Expense.joins(:cash_balance).where(cash_balances: { community_id: current_user.community_ids })
+    @q = base.ransack(params[:q])
     @expenses = @q.result
                .includes(:cash_balance)
                .order(created_at: :desc)
@@ -65,7 +66,8 @@ class ExpensesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_expense
-      @expense = Expense.find(params[:id])
+      base = current_user.admin? ? Expense : Expense.joins(:cash_balance).where(cash_balances: { community_id: current_user.community_ids })
+      @expense = base.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

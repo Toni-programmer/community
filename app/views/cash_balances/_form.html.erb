@@ -25,10 +25,6 @@
       <%= form.text_field :financial_year, class: "form-control form-control-solid", required: true %>
     </div>
     <div class="mb-4">
-      <%= form.label "Cuenta corriente", class: "form-label" %>
-      <%= form.text_field :current_amount, class: "form-control form-control-solid", required: true %>
-    </div>
-    <div class="mb-4">
       <%= form.label "Estado", class: "form-label" %>
       <%= form.collection_select(:status, CashBalance.statuses, :first, :second, prompt: "Elige un estado") %>
     </div>

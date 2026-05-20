@@ -4,11 +4,11 @@
     <tbody>
       <tr>
         <td><strong>Zona</strong></td>
-        <td><%= @maintenance.common_area.presence.name || "-" %></td>
+        <td><%= @maintenance.common_area&.name || "-" %></td>
       </tr>
       <tr>
         <td><strong>Proveedor</strong></td>
-        <td><%= @maintenance.supplier.presence.name || "-" %></td>
+        <td><%= @maintenance.supplier&.name || "-" %></td>
       </tr>
       <tr>
         <td><strong>Descripción</strong></td>
@@ -22,6 +22,8 @@
   </table>
 </div>
 <div class="flex items-center justify-start mt-4 mb-8">
-  <%= link_to "← Atrás", maintenances_path, class: "me-1" %> |
-  <%= link_to "Editar", edit_maintenance_path(@maintenance), class: "ms-1" %>
+  <%= link_to "← Atrás", maintenances_path, class: "me-1" %>
+  <% if current_user.admin? %>
+    | <%= link_to "Editar", edit_maintenance_path(@maintenance), class: "ms-1" %>
+  <% end %>
 </div>

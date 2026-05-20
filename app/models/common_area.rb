@@ -12,5 +12,6 @@ class CommonArea < ApplicationRecord
     sports_courts: "Pistas deportivas"
   }, default: :pool
   
+  validates :name, presence: true
   validates :community_id, presence: true
 end

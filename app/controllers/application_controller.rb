@@ -19,4 +19,9 @@ class ApplicationController < ActionController::Base
   def require_admin
     redirect_to root_path, alert: "No tienes permisos" unless current_user&.admin?
   end
+
+  def community_scope(model)
+    return model.all if current_user.admin?
+    model.where(community_id: current_user.community_ids)
+  end
 end

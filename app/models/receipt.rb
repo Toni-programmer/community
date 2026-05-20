@@ -2,7 +2,8 @@ class Receipt < ApplicationRecord
   belongs_to :property
   belongs_to :cash_balance
 
-  after_create :sum_to_cash_balance
+  validates :monthly_price, presence: true, numericality: { greater_than: 0 }
+  validates :date, presence: true
 
   private
 
@@ -29,13 +30,6 @@ class Receipt < ApplicationRecord
    end
 
   
- def sum_to_cash_balance
-  return unless cash_balance && monthly_price
-
-  cash_balance.update!(
-    current_amount: cash_balance.current_amount.to_f + monthly_price.to_f
-  )
- end
    enum :status,{
     pending: "Pendiente",
     completed: "Completado"

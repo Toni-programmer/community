@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_22_094424) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_20_102028) do
   create_table "cash_balances", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "community_id", null: false
     t.datetime "created_at", null: false
-    t.float "current_amount"
     t.float "financial_year"
     t.string "status"
     t.datetime "updated_at", null: false
@@ -144,7 +143,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_094424) do
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.integer "failed_attempts", default: 0, null: false
     t.string "lastname"
+    t.datetime "locked_at"
     t.string "name"
     t.string "phone"
     t.integer "property_type"
@@ -152,9 +153,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_094424) do
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
     t.integer "role", default: 0
+    t.string "unlock_token"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   add_foreign_key "cash_balances", "communities"

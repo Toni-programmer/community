@@ -5,8 +5,11 @@ class Community < ApplicationRecord
   has_many :incidences, dependent: :destroy
   has_many :reservations, through: :common_areas
   has_many :maintenances, through: :common_areas
-  has_many :suppliers, through: :destroy
-  has_many :receipts, through: :destroy
   has_many :cash_balances, dependent: :destroy
   has_many :properties, dependent: :destroy
+  has_many :receipts, through: :properties
+
+  validates :name, presence: true
+  validates :address, presence: true
+  validates :cif, presence: true
 end

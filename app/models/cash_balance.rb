@@ -1,6 +1,7 @@
 class CashBalance < ApplicationRecord
   belongs_to :community
   validates :community, presence: true
+  validates :financial_year, presence: true, numericality: { only_integer: true, greater_than: 2000 }
   has_many :receipts, dependent: :destroy
   has_many :expenses, dependent: :destroy
 
